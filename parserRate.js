@@ -43,7 +43,7 @@ async function getRate (){
 }
 
 
-getRate()
+
 
 
 module.exports = {getRate}
