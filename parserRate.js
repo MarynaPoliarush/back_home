@@ -9,7 +9,7 @@ async function getRate (){
   try{
       const browser = await puppeteer.launch({"headless": 'new' ,"args": ["--fast-start", "--disable-extensions", "--no-sandbox"], 'ignoreDefaultArgs': [ '--enable-automation'] })
       const newPage = await browser.newPage();
-      await newPage.goto('https://finance.ua/ua/currency')
+      await newPage.goto('https://finance.ua/ua/currency',{timeout: 0})
 
     
           let allNums = await newPage.evaluate( ()=>{
