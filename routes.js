@@ -22,7 +22,6 @@ const ObjectId = mongodb.ObjectId
 
 
 
-
 router.get('/uahrates', async (req,res)=>{
     console.log('request UAH')
     const fetchedRates = await getRate();
@@ -34,15 +33,12 @@ router.get('/uahrates', async (req,res)=>{
     }
 
     try{
-    currencies.USD.push(Number(fetchedRates[0].split('\n')[0]).toFixed(2))
-    currencies.USD.push(Number(fetchedRates[0].split('\n')[1]).toFixed(2))
-    currencies.USD.push(Number(fetchedRates[1].split('\n')[0]).toFixed(2))
-    currencies.USD.push(Number(fetchedRates[1].split('\n')[1]).toFixed(2))
+    currencies.USD.push(fetchedRates[0].slice(0,fetchedRates[1].length-4))
+    currencies.USD.push(fetchedRates[2].slice(0,fetchedRates[1].length-4))
+    currencies.EUR.push(fetchedRates[1].slice(0,fetchedRates[1].length-4))
+    currencies.EUR.push(fetchedRates[3].slice(0,fetchedRates[1].length-4))
 
-    currencies.EUR.push(Number(fetchedRates[4].split('\n')[0]).toFixed(2))
-    currencies.EUR.push(Number(fetchedRates[4].split('\n')[1]).toFixed(2))
-    currencies.EUR.push(Number(fetchedRates[5].split('\n')[0]).toFixed(2))
-    currencies.EUR.push(Number(fetchedRates[5].split('\n')[1]).toFixed(2))
+    
 }catch(e){
     console.log(e)
 }
