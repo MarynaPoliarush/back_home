@@ -13,7 +13,7 @@ async function getForeign (){
 
     try{
        
-    const browser = await puppeteer.launch({"headless": 'new',"args": ["--fast-start", "--disable-extensions", "--no-sandbox"], 'ignoreDefaultArgs': [ '--enable-automation'] })
+    const browser = await puppeteer.launch({"headless": true,"args": ["--fast-start", "--disable-extensions", "--no-sandbox"], 'ignoreDefaultArgs': [ '--enable-automation'] })
     const newPage = await browser.newPage();
     await newPage.goto('https://tradingeconomics.com/currencies',{timeout: 0})
 
