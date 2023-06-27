@@ -7,7 +7,7 @@ async function getRate (){
     let currencies
 
   try{
-      const browser = await puppeteer.launch({"headless": 'new' ,"args": ["--fast-start", "--disable-extensions", "--no-sandbox"], 'ignoreDefaultArgs': [ '--enable-automation'] })
+      const browser = await puppeteer.launch({"headless": true ,"args": ["--fast-start", "--disable-extensions", "--no-sandbox"], 'ignoreDefaultArgs': [ '--enable-automation'] })
       const newPage = await browser.newPage();
       await newPage.goto('https://finance.ua/ua/currency',{timeout: 0})
 
