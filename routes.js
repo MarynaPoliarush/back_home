@@ -5,7 +5,7 @@ const router = express.Router()
 // const multer= require('multer')
 const db = require('./data')
 const mongodb = require('mongodb')
-
+const stockAPI = process.env.STOCK_API
 
 const {getRate}= require('./parserRate')
 const {getForeign} = require('./parserForeign')
@@ -265,6 +265,163 @@ router.get('/foreignrates', async (req,res)=>{
 //     res.send(crypto)
 
 // })
+
+
+router.get('/stocks', async (req, res) => {
+    const api_key = finnhub.ApiClient.instance.authentications['api_key'];
+    api_key.apiKey = stockAPI;
+    const finnhubClient = new finnhub.DefaultApi();
+
+
+    var date = new Date();
+    let today = Math.floor(Date.now() / 1000 )
+    let yesterday = Math.floor(date.setDate(date.getDate() - 2)/ 1000)
+    let week = Math.floor(date.setDate(date.getDate() - 7)/ 1000)
+    let month = Math.floor(date.setDate(date.getDate() - 30)/ 1000)
+    let year = Math.floor(date.setDate(date.getDate() - 360)/ 1000)
+
+    let stockPrice = [];
+
+    console.log(year,month,week,yesterday,today)
+  
+    try {
+      const stock1Promise = new Promise((resolve, reject) => {
+        finnhubClient.stockCandles("EPAM", "D", yesterday, today, (error, data, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+  
+      const stock2Promise = new Promise((resolve, reject) => {
+        finnhubClient.stockCandles("AAPL", "D", yesterday, today, (error, data, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+
+      const stock3Promise = new Promise((resolve, reject) => {
+        finnhubClient.stockCandles("META", "D", yesterday, today, (error, data, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+
+      const stock11Promise = new Promise((resolve, reject) => {
+        finnhubClient.stockCandles("EPAM", "D", week, week, (error, data, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+  
+      const stock22Promise = new Promise((resolve, reject) => {
+        finnhubClient.stockCandles("AAPL", "D", week, week, (error, data, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+
+      const stock33Promise = new Promise((resolve, reject) => {
+        finnhubClient.stockCandles("META", "D", week, week, (error, data, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+
+      const stock111Promise = new Promise((resolve, reject) => {
+        finnhubClient.stockCandles("EPAM", "D", month, month, (error, data, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+  
+      const stock222Promise = new Promise((resolve, reject) => {
+        finnhubClient.stockCandles("AAPL", "D", month, month, (error, data, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+
+      const stock333Promise = new Promise((resolve, reject) => {
+        finnhubClient.stockCandles("META", "D", month, month, (error, data, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+
+      const stock1111Promise = new Promise((resolve, reject) => {
+        finnhubClient.stockCandles("EPAM", "D", year, year, (error, data, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+  
+      const stock2222Promise = new Promise((resolve, reject) => {
+        finnhubClient.stockCandles("AAPL", "D", year, year, (error, data, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+
+      const stock3333Promise = new Promise((resolve, reject) => {
+        finnhubClient.stockCandles("META", "D", year, year, (error, data, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+  
+    let stockPrice = await Promise.all([stock1Promise, stock2Promise, stock3Promise,stock11Promise, stock22Promise, stock33Promise,
+        stock111Promise, stock222Promise]);
+        
+    let secondStockPrices = await Promise.all([stock333Promise,stock1111Promise, stock2222Promise, stock3333Promise])
+  
+
+    console.log([...stockPrice, ...secondStockPrices]);
+
+    res.send([...stockPrice, ...secondStockPrices]);
+
+    } catch (error) {
+      console.error(error);
+    }
+  
+    
+    
+  });
 
 
 
