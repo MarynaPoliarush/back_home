@@ -5,6 +5,7 @@ const router = express.Router()
 // const multer= require('multer')
 const db = require('./data')
 const mongodb = require('mongodb')
+const finnhub = require('finnhub');
 const stockAPI = process.env.STOCK_API
 
 const {getRate}= require('./parserRate')
