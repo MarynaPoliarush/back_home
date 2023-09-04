@@ -2,7 +2,6 @@ const express = require('express');
 const catalog = require('./routes')
 const cors = require("cors");
 const path = require('path')
-const db = require('./data');
 
 const app = express();
 
@@ -22,9 +21,7 @@ app.use(express.static(__dirname))
 
 app.use('/', catalog);
 
-
-db.connectToDatabase().then(function () {
-  app.listen(5000)
-  console.log('DATABASE CONNECTED')
-})
+app.listen(5000, () => {
+    console.log("Listening on http://localhost:5000/");
+});
 
