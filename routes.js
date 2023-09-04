@@ -3,7 +3,7 @@ const router = express.Router()
 
 // const path = require('path')
 // const multer= require('multer')
-const db = require('./data')
+
 const mongodb = require('mongodb')
 const finnhub = require('finnhub');
 const stockAPI = process.env.STOCK_API
