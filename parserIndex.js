@@ -1,6 +1,6 @@
 console.log("helloIndex");
 const puppeteer =  require('puppeteer-extra');
-var kill  = require('tree-kill');
+
 
 async function getIndex (){
     let stock={
@@ -54,13 +54,6 @@ async function getIndex (){
 
 }
 
-process.on('exit', (code) => {
-    kill(child.pid, 'SIGTERM', function(err){
-      kill(child.pid, 'SIGKILL', function(err){
-        process.kill(-child.pid);
-      });
-    });
-  });
 
   
     console.log(stock)
